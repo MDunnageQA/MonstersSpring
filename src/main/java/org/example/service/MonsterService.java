@@ -30,4 +30,11 @@ public class MonsterService {
         return this.repo.findById(id).orElseThrow(MonsterNofFoundException::new);
     }
 
+    public Monsters updateMonsters(Long id, Monsters monsters){
+        Monsters update = findMonstersByID(id);
+        update.setName(monsters.getName());
+        update.setCategory(monsters.getCategory());
+        update.setDescription(monsters.getDescription());
+        return this.repo.save(update);
+    }
 }
