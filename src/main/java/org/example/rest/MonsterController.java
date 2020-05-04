@@ -32,4 +32,9 @@ public class MonsterController {
         return this.service.findMonstersByID(id);
     }
 
+    @PutMapping("/updateMonsters/{id}")
+    public Monsters updateMonsters(@PathVariable Long id, @RequestBody Monsters monsters){
+        return this.service.updateMonsters(id, monsters);
+    }
+
 }
