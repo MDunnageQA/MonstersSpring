@@ -21,8 +21,8 @@ public class MonsterService {
         return this.repo.findAll();
     }
 
-    public Monsters createMonsters(Monsters, monsters){
-        return this.repo.save(Monsters);
+    public Monsters createMonsters(Monsters monsters){
+        return this.repo.save(monsters);
     }
 
 }
