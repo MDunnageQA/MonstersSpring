@@ -29,4 +29,6 @@ public class MonsterController {
     public Monsters createMonsters(@RequestBody Monsters monsters){
         return this.service.createMonsters(monsters);
     }
+
+
 }

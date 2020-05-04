@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.domain.Monsters;
+import org.example.exceptions.MonsterNofFoundException;
 import org.example.repository.MonsterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,10 @@ public class MonsterService {
 
     public Monsters createMonsters(Monsters monsters){
         return this.repo.save(monsters);
+    }
+
+    public Monsters findMonstersByID(Long id){
+        return this.repo.findById(id).orElseThrow(MonsterNofFoundException::new);
     }
 
 }
