@@ -27,7 +27,7 @@ public class MonsterController {
         return this.service.createMonsters(monsters);
     }
 
-    @GetMapping("/getMonstersByID")
+    @GetMapping("/getMonstersByID/{id}")
     public Monsters getMonstersByID(@PathVariable Long id){
         return this.service.findMonstersByID(id);
     }
