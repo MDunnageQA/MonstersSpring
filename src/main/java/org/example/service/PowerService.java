@@ -18,8 +18,13 @@ public class PowerService {
         this.repo = repo;
     }
 
-public List<Power> readPowers(){
+    public List<Power> readPowers(){
         return this.repo.findAll();
-}
+    }
+
+
+    public Power createPowers(Power power){
+        return this.repo.save(power);
+    }
 
 }
