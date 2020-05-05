@@ -1,10 +1,7 @@
 package org.example.domain;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -16,6 +13,9 @@ public class Monsters {
     private String name;
     private String category;
     private String Description;
+
+    @ManyToOne(targetEntity = Power.class)
+    private Power power;
 
     public Long getId() {
         return id;
