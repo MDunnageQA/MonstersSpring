@@ -48,4 +48,21 @@ public class Monsters {
     public void setDescription(String description) {
         Description = description;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Monsters monsters = (Monsters) o;
+        return Objects.equals(id, monsters.id) &&
+                Objects.equals(name, monsters.name) &&
+                Objects.equals(category, monsters.category) &&
+                Objects.equals(Description, monsters.Description) &&
+                Objects.equals(power, monsters.power);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, category, Description, power);
+    }
 }

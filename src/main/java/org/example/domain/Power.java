@@ -3,6 +3,7 @@ package org.example.domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Power {
@@ -47,5 +48,22 @@ public class Power {
 
     public void setDangerLevel(Integer dangerLevel) {
         this.dangerLevel = dangerLevel;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Power power = (Power) o;
+        return Objects.equals(id, power.id) &&
+                Objects.equals(name, power.name) &&
+                Objects.equals(description, power.description) &&
+                Objects.equals(dangerLevel, power.dangerLevel) &&
+                Objects.equals(monsters, power.monsters);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, dangerLevel, monsters);
     }
 }

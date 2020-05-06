@@ -1,6 +1,7 @@
 package org.example.dto;
 
 import java.util.List;
+import java.util.Objects;
 
 public class PowerDTO {
 
@@ -59,5 +60,22 @@ public class PowerDTO {
 
     public void setMonsters(List<MonsterDTO> monsters) {
         this.monsters = monsters;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PowerDTO powerDTO = (PowerDTO) o;
+        return Objects.equals(id, powerDTO.id) &&
+                Objects.equals(name, powerDTO.name) &&
+                Objects.equals(description, powerDTO.description) &&
+                Objects.equals(dangerLevel, powerDTO.dangerLevel) &&
+                Objects.equals(monsters, powerDTO.monsters);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, dangerLevel, monsters);
     }
 }
