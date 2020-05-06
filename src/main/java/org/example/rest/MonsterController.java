@@ -1,8 +1,11 @@
 package org.example.rest;
 
 import org.example.domain.Monsters;
+import org.example.dto.MonsterDTO;
 import org.example.service.MonsterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,23 +21,30 @@ public class MonsterController {
     }
 
     @GetMapping("/getAllMonsters")
-    public List<Monsters> getAllMonsters(){
-        return this.service.readMonsters();
+    public ResponseEntity<List<MonsterDTO>> getAllMonsters(){
+        return ResponseEntity.ok(this.service.readMonsters());
     }
 
     @PostMapping("/createMonsters")
-    public Monsters createMonsters(@RequestBody Monsters monsters){
-        return this.service.createMonsters(monsters);
+    public ResponseEntity<MonsterDTO> createMonsters(@RequestBody Monsters monsters){
+        return new ResponseEntity<MonsterDTO>(this.service.createMonsters(monsters), HttpStatus.CREATED);
     }
 
     @GetMapping("/getMonstersByID/{id}")
-    public Monsters getMonstersByID(@PathVariable Long id){
-        return this.service.findMonstersByID(id);
+    public ResponseEntity<MonsterDTO> getMonstersByID(@PathVariable Long id){
+        return ResponseEntity.ok(this.service.findMonstersByID(id));
     }
 
     @PutMapping("/updateMonsters/{id}")
-    public Monsters updateMonsters(@PathVariable Long id, @RequestBody Monsters monsters){
-        return this.service.updateMonsters(id, monsters);
+    public ResponseEntity<MonsterDTO> updateMonsters(@PathVariable Long id, @RequestBody Monsters monsters){
+        return ResponseEntity.ok(this.service.findMonstersByID(id));
+    }
+
+    @DeleteMapping("/deleteMonsters/{id}")
+    public ResponseEntity<?> deleteNote(@PathVariable Long id){
+        return this.service.deleteMonsters(id)
+                ? ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
+                : ResponseEntity.noContent().build();
     }
 
 }
