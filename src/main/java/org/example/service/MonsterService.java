@@ -1,40 +1,60 @@
 package org.example.service;
 
 import org.example.domain.Monsters;
+import org.example.dto.MonsterDTO;
 import org.example.exceptions.MonsterNofFoundException;
 import org.example.repository.MonsterRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MonsterService {
 
     private final MonsterRepository repo;
 
+    private final ModelMapper mapper;
+
     @Autowired
-    public MonsterService(MonsterRepository repo){
+    public MonsterService(MonsterRepository repo, ModelMapper mapper){
         this.repo = repo;
+        this.mapper = mapper;
     }
 
-    public List<Monsters> readMonsters(){
-        return this.repo.findAll();
+    private MonsterDTO mapToDTO(Monsters monsters) {
+        return this.mapper.map(monsters, MonsterDTO.class);
     }
 
-    public Monsters createMonsters(Monsters monsters){
-        return this.repo.save(monsters);
+    public List<MonsterDTO> readMonsters(){
+        return this.repo.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
-    public Monsters findMonstersByID(Long id){
-        return this.repo.findById(id).orElseThrow(MonsterNofFoundException::new);
+    public MonsterDTO createMonsters(Monsters monsters){
+        Monsters tempMonsters = this.repo.save(monsters);
+        return this.mapToDTO(tempMonsters);
     }
 
-    public Monsters updateMonsters(Long id, Monsters monsters){
-        Monsters update = findMonstersByID(id);
+    public MonsterDTO findMonstersByID(Long id){
+        return this.mapToDTO(this.repo.findById(id).orElseThrow(MonsterNofFoundException::new));
+    }
+
+    public MonsterDTO updateMonsters(Long id, Monsters monsters){
+        Monsters update = this.repo.findById(id).orElseThrow(MonsterNofFoundException::new);
         update.setName(monsters.getName());
         update.setCategory(monsters.getCategory());
         update.setDescription(monsters.getDescription());
-        return this.repo.save(update);
+        Monsters tempMonsters = this.repo.save(monsters);
+        return this.mapToDTO(tempMonsters);
+    }
+
+    public boolean deleteMonsters(Long id){
+        if(!this.repo.existsById(id)){
+            throw new MonsterNofFoundException();
+        }
+        this.repo.deleteById(id);
+        return this.repo.existsById(id);
     }
 }
