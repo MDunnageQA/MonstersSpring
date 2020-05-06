@@ -1,8 +1,10 @@
 package org.example.rest;
 
 import org.example.domain.Power;
+import org.example.dto.PowerDTO;
 import org.example.service.PowerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,8 +23,8 @@ public class PowerController {
     }
 
     @GetMapping("/getAllPowers")
-    public List<Power> getAllPowers(){
-        return this.service.readPowers();
+    public ResponseEntity <List<PowerDTO>> getAllPowers(){
+        return ResponseEntity.ok(this.service.readPowers());
     }
 
     @PostMapping("/createPowers")
