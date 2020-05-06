@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PowerService {
@@ -22,17 +23,17 @@ public class PowerService {
         this.mapper = mapper;
     }
 
-    private PowerDTO mapToDo(Power power){
+    private PowerDTO mapToDTO(Power power){
         return this.mapper.map(power, PowerDTO.class);
     }
 
-    public List<Power> readPowers(){
-        return this.repo.findAll();
+    public List<PowerDTO> readPowers(){
+        return this.repo.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
 
-    public Power createPowers(Power power){
-        return this.repo.save(power);
+    public PowerDTO createPowers(Power power){
+        return this.mapToDTO(this.repo.save(power));
     }
 
 }
