@@ -4,6 +4,7 @@ import org.example.domain.Power;
 import org.example.dto.PowerDTO;
 import org.example.service.PowerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,8 +29,8 @@ public class PowerController {
     }
 
     @PostMapping("/createPowers")
-    public Power createPowers(@RequestBody Power power){
-        return this.service.createPowers(power);
+    public ResponseEntity<PowerDTO> createPowers(@RequestBody Power power){
+        return new ResponseEntity<PowerDTO>(this.service.createPowers(power), HttpStatus.CREATED);
     }
 
 }
